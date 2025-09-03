@@ -1,27 +1,25 @@
 <?php
 // dashboard.php
-// Show main dashboard page for receptionist
 
-// 1) Access control
 if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'receptionist') {
     header("Location: ../login.php");
     exit();
 }
 
-// 2) Sample stats (replace later with DB queries)
+
 $totalPatients = 120;
 $totalDoctors = 15;
 $totalAppointments = 45;
 $totalLabOrders = 18;
 
-// 3) Sample recent appointments
+
 $appointments = [
     ["patient" => "Ahmed Hassan", "doctor" => "Dr. Rahman", "date" => "2025-09-05", "time" => "10:30 AM", "status" => "confirmed"],
     ["patient" => "Sarah Khan", "doctor" => "Dr. Fatima", "date" => "2025-09-05", "time" => "2:00 PM", "status" => "pending"],
     ["patient" => "Mohammad Ali", "doctor" => "Dr. Islam", "date" => "2025-09-06", "time" => "9:00 AM", "status" => "upcoming"]
 ];
 
-// 4) Sample recent lab orders
+
 $labOrders = [
     ["id" => "LAB-010", "patient" => "John Doe", "test" => "Blood Test", "status" => "processing"],
     ["id" => "LAB-011", "patient" => "Jane Smith", "test" => "X-Ray", "status" => "approved"],
