@@ -23,7 +23,7 @@ if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'doctor') {
 </nav>
 <hr>
 <section id="profileSummary">
-    <img src="profile.jpg" alt="Profile Picture" style="width:100px;height:100px;">
+    <img src="https://img.freepik.com/premium-vector/avatar-bearded-doctor-doctor-with-stethoscope-vector-illustrationxa_276184-31.jpg" alt="Profile Picture" style="width:100px;height:100px;">
     <p><strong>Name:</strong> Dr. John Doe</p>
     <p><strong>Specialty:</strong> Cardiology</p>
     <p><strong>Contact:</strong> 0123456789</p>
