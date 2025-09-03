@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8" />
     <title>Prescription</title>
-    <link rel="stylesheet" href="../../Assets/CSS/doc_styles.css" />
+    <link rel="stylesheet" href="../../Assets/css/doctor.css" />
 </head>
 <body>
 <nav>
