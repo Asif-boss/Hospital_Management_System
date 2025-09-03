@@ -29,6 +29,6 @@ if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'doctor') {
     <p><strong>Contact:</strong> 0123456789</p>
     <button onclick="window.location.href='edit_profile.php'">Edit Profile</button>
 </section>
-<script src="../../assets/JS/doctor.js"></script>
+<script src="../../assets/js/doctor.js"></script>
 </body>
 </html>

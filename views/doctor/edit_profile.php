@@ -42,6 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-<script src="../../assets/JS/doctor.js"></script>
+<script src="../../assets/js/doctor.js"></script>
 </body>
 </html>

@@ -59,6 +59,6 @@ if (isset($_GET["success"])) {
     <input type="text" id="presDosage" name="presDosage" required><br /><br />
     <button type="submit">Send Prescription</button>
 </form>
-<script src="../../assets/JS/doctor.js"></script>
+<script src="../../assets/js/doctor.js"></script>
 </body>
 </html>
