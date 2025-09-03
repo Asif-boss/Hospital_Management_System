@@ -6,7 +6,6 @@ if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'receptionist') {
     exit();
 }
 
-
 $totalPatients = 120;
 $totalDoctors = 15;
 $totalAppointments = 45;
@@ -67,6 +66,7 @@ include '../templates/header.php';
         </div>
 
         <div class="dashboard-widgets">
+            
             <!-- Recent Appointments -->
             <div class="dashboard-card">
                 <div class="card-header">
@@ -121,9 +121,8 @@ include '../templates/header.php';
     </main>
 </div>
 
-<!-- FontAwesome -->
-<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-<script src="../../assets/js/validation.js"></script>
-</body>
+
+<script src="../../assets/js/validation.js"></script></body>
 </html>
+
 
