@@ -5,22 +5,29 @@ if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'doctor') {
     exit;
 }
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $patient = trim($_POST["presPatient"]);
-    $medicine = trim($_POST["presMedicine"]);
-    $dosage = trim($_POST["presDosage"]);
+    $patient = trim($_POST["testPatient"]);
+    $testName = trim($_POST["testName"]);
+    $testDescription = trim($_POST["testDescription"]);
+    $testDate = trim($_POST["testDate"]);
     $errorMessage = "";
+
+    // Validate inputs
     if (strlen($patient) < 2) {
         $errorMessage = "Patient name too short";
-    } elseif (strlen($medicine) < 2) {
-        $errorMessage = "Medicine name too short";
-    } elseif (strlen($dosage) < 2) {
-        $errorMessage = "Dosage too short";
+    } elseif (strlen($testName) < 2) {
+        $errorMessage = "Test name too short";
+    } elseif (strlen($testDescription) < 2) {
+        $errorMessage = "Test description too short";
+    } elseif (empty($testDate)) {
+        $errorMessage = "Test date is required";
     }
+
+    // Redirect with error or success
     if ($errorMessage) {
-        header("Location: prescription.php?error=$errorMessage");
+        header("Location: lab_test.php?error=$errorMessage");
         exit;
     } else {
-        header("Location: prescription.php?success=1");
+        header("Location: lab_test.php?success=1");
         exit;
     }
 }
@@ -29,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <title>Prescription</title>
+    <title>Lab Test Order</title>
     <link rel="stylesheet" href="../../assets/css/doctor.css" />
 </head>
 <body>
@@ -47,17 +54,23 @@ if (isset($_GET["error"])) {
     echo "<p style='color:red;'>" . $_GET["error"] . "</p>";
 }
 if (isset($_GET["success"])) {
-    echo "<p style='color:green;'>Prescription submitted successfully!</p>";
+    echo "<p style='color:green;'>Lab test order submitted successfully!</p>";
 }
 ?>
-<form id="prescriptionForm" method="post" action="prescription.php" onsubmit="return validatePrescription()">
+<form id="labTestForm" method="post" action="lab_test.php" onsubmit="return validateLabTest()">
     <label>Patient Name:</label><br />
-    <input type="text" id="presPatient" name="presPatient" required><br />
-    <label>Medicine:</label><br />
-    <input type="text" id="presMedicine" name="presMedicine" required><br />
-    <label>Dosage:</label><br />
-    <input type="text" id="presDosage" name="presDosage" required><br /><br />
-    <button type="submit">Send Prescription</button>
+    <input type="text" id="testPatient" name="testPatient" required><br />
+    
+    <label>Test Name:</label><br />
+    <input type="text" id="testName" name="testName" required><br />
+    
+    <label>Test Description:</label><br />
+    <input type="text" id="testDescription" name="testDescription" required><br />
+    
+    <label>Test Date:</label><br />
+    <input type="date" id="testDate" name="testDate" required><br /><br />
+    
+    <button type="submit">Order Lab Test</button>
 </form>
 <script src="../../assets/js/doctor.js"></script>
 </body>
