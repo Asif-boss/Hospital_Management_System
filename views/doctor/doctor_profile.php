@@ -10,7 +10,7 @@ if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'doctor') {
 <head>
     <meta charset="UTF-8" />
     <title>Doctor Profile</title>
-    <link rel="stylesheet" href="../../Assets/CSS/doc_styles.css" />
+    <link rel="stylesheet" href="../../Assets/css/doctor.css" />
 </head>
 <body>
 <nav>
