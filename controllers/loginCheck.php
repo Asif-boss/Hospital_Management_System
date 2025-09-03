@@ -11,6 +11,9 @@
     } elseif ($username == 'receptionist' || $password == 'receptionist') {
         setcookie('user_type', 'receptionist', time() + (86400 * 30), "/");
         header('location: ../views/receptionist/dashboard.php');
+    } elseif ($username == 'doctor' || $password == 'doctor') {
+        setcookie('user_type', 'receptionist', time() + (86400 * 30), "/");
+        header('location: ../views/doctor/doctor_directory.php');
     } else {
         header('location: ../views/login.php?error=invalid_log');
     }
