@@ -1,4 +1,4 @@
-
+﻿
 
 <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
@@ -62,6 +62,38 @@
                 <i class="fas fa-crown"></i>
                 <span>Super Admin</span>
             </a>
+<?php elseif (isset($_COOKIE['user_type']) && $_COOKIE['user_type'] === 'doctor'): ?>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h2 class="sidebar-title">Doctor Panel</h2>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.php" class="nav-link <?php if ($currentPage == 'dashboard.php'): ?>active<?php endif; ?>">
+        <span class="icon">🏠</span>
+        <span class="link-text">Dashboard</span>
+      </a>
+      <a href="edit_profile.php" class="nav-link <?php if ($currentPage == 'edit_profile.php'): ?>active<?php endif; ?>">
+        <span class="icon">👤</span>
+        <span class="link-text">Edit Profile</span>
+      </a>
+      <a href="prescription.php" class="nav-link <?php if ($currentPage == 'prescription.php'): ?>active<?php endif; ?>">
+        <span class="icon">📝</span>
+        <span class="link-text">Prescription</span>
+      </a>
+      <a href="lab_test.php" class="nav-link <?php if ($currentPage == 'lab_test.php'): ?>active<?php endif; ?>">
+        <span class="icon">🔬</span>
+        <span class="link-text">Lab Test Order</span>
+      </a>
+      <a href="doctor_directory.php" class="nav-link <?php if ($currentPage == 'doctor_directory.php'): ?>active<?php endif; ?>">
+        <span class="icon">📋</span>
+        <span class="link-text">Doctor Directory</span>
+      </a>
+      <a href="../../Controllers/logout.php" class="nav-link logout-link">
+        <span class="icon">🚪</span>
+        <span class="link-text">Logout</span>
+      </a>
+    </nav>
+  </div>
         <?php elseif ($_COOKIE['user_type'] === 'receptionist'): ?>
             <a href="dashboard.php" class="nav-link">
                 <i class="fas fa-tachometer-alt"></i>

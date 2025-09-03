@@ -1,77 +1,60 @@
 <?php
-// require_once '../../controllers/loginCheck.php';
+
 if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'doctor') {
     header('Location: ../../views/login.php?error=access_denied');
     exit;
 }
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $patient = trim($_POST["testPatient"]);
-    $testName = trim($_POST["testName"]);
-    $testDescription = trim($_POST["testDescription"]);
-    $testDate = trim($_POST["testDate"]);
-    $errorMessage = "";
+include '../../views/templates/header.php';
+include '../../views/templates/sidebar.php';
 
-    // Validate inputs
-    if (strlen($patient) < 2) {
-        $errorMessage = "Patient name too short";
-    } elseif (strlen($testName) < 2) {
-        $errorMessage = "Test name too short";
-    } elseif (strlen($testDescription) < 2) {
-        $errorMessage = "Test description too short";
-    } elseif (empty($testDate)) {
-        $errorMessage = "Test date is required";
-    }
+// Handle form submission
+$successMessage = "";
+$errorMessage = "";
 
-    // Redirect with error or success
-    if ($errorMessage) {
-        header("Location: lab_test.php?error=$errorMessage");
-        exit;
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $patientName = trim($_POST['patient_name'] ?? '');
+    $testName = trim($_POST['test_name'] ?? '');
+    $testDescription = trim($_POST['test_description'] ?? '');
+    $testDate = trim($_POST['test_date'] ?? '');
+
+    if ($patientName && $testName && $testDate) {
+        // Save lab test order to DB here
+        $successMessage = "Lab test order submitted successfully!";
     } else {
-        header("Location: lab_test.php?success=1");
-        exit;
+        $errorMessage = "Please fill in required fields (Patient Name, Test Name, Test Date).";
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Lab Test Order</title>
-    <link rel="stylesheet" href="../../assets/css/doctor.css" />
-</head>
-<body>
-<nav>
-    <a href="doctor_profile.php">Profile</a> |
-    <a href="edit_profile.php">Edit Profile</a> |
-    <a href="prescription.php">Prescription</a> |
-    <a href="lab_test.php">Lab Test Order</a> |
-    <a href="doctor_directory.php">Doctor Directory</a> |
-    <a href="../../controllers/logout.php" style="color:#c0392b;">Logout</a>
-</nav>
-<hr>
-<?php
-if (isset($_GET["error"])) {
-    echo "<p style='color:red;'>" . $_GET["error"] . "</p>";
-}
-if (isset($_GET["success"])) {
-    echo "<p style='color:green;'>Lab test order submitted successfully!</p>";
-}
-?>
-<form id="labTestForm" method="post" action="lab_test.php" onsubmit="return validateLabTest()">
-    <label>Patient Name:</label><br />
-    <input type="text" id="testPatient" name="testPatient" required><br />
-    
-    <label>Test Name:</label><br />
-    <input type="text" id="testName" name="testName" required><br />
-    
-    <label>Test Description:</label><br />
-    <input type="text" id="testDescription" name="testDescription" required><br />
-    
-    <label>Test Date:</label><br />
-    <input type="date" id="testDate" name="testDate" required><br /><br />
-    
-    <button type="submit">Order Lab Test</button>
-</form>
-<script src="../../assets/js/doctor.js"></script>
+<div class="main-content">
+  <header class="page-header">
+    <h1>Lab Test Order</h1>
+  </header>
+
+  <section class="profile-card" style="max-width:600px; margin:auto;">
+    <?php if ($successMessage): ?>
+      <div class="message-success"><?= htmlspecialchars($successMessage) ?></div>
+    <?php elseif ($errorMessage): ?>
+      <div class="message-error"><?= htmlspecialchars($errorMessage) ?></div>
+    <?php endif; ?>
+
+    <form method="POST" action="lab_test.php" novalidate>
+      <label for="patient_name">Patient Name:</label>
+      <input type="text" id="patient_name" name="patient_name" placeholder="Enter patient name" required>
+
+      <label for="test_name">Test Name:</label>
+      <input type="text" id="test_name" name="test_name" placeholder="Enter test name" required>
+
+      <label for="test_description">Test Description:</label>
+      <textarea id="test_description" name="test_description" placeholder="Enter test description (optional)" rows="3"></textarea>
+
+      <label for="test_date">Test Date:</label>
+      <input type="date" id="test_date" name="test_date" required>
+
+      <button type="submit" class="btn primary">Order Lab Test</button>
+      <button type="button" class="btn back-btn" onclick="window.location.href='dashboard.php'">Back / Discard</button>
+    </form>
+  </section>
+</div>
+<script src="../../assets/js/validation.js"></script>
 </body>
 </html>

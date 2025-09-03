@@ -1,47 +1,59 @@
 <?php
-// require_once '../../controllers/loginCheck.php';
+
 if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'doctor') {
     header('Location: ../../views/login.php?error=access_denied');
     exit;
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <title>Edit Profile</title>
-    <link rel="stylesheet" href="../../assets/css/doctor.css" />
-</head>
-<body>
-<nav>
-    <a href="doctor_profile.php">Profile</a> |
-    <a href="edit_profile.php">Edit Profile</a> |
-    <a href="prescription.php">Prescription</a> |
-    <a href="lab_test.php">Lab Test Order</a> |
-    <a href="doctor_directory.php">Doctor Directory</a> |
-    <a href="../../controllers/logout.php" style="color:#c0392b;">Logout</a>
-</nav>
-<hr>
-<form id="editProfileForm" method="post" action="edit_profile.php" onsubmit="return validateEditProfile()">
-    <label>Name:</label><br />
-    <input type="text" value="Dr. John Doe" readonly><br /><br />
-    <label>Specialty:</label><br />
-    <input type="text" value="Cardiology" readonly><br /><br />
-    <label>Contact Info:</label><br />
-    <input type="tel" id="contact" name="contact" value="0123456789" required pattern="[0-9]{11}" placeholder="Enter 11-digit number"><br /><br />
-    <button type="submit">Save Changes</button>
-    <button type="button" onclick="window.location.href='doctor_profile.php'">Back / Discard</button>
-</form>
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $contact = trim($_POST['contact']);
-    if (preg_match('/^\d{11}$/', $contact)) {
-        echo "<p style='color:green;'>Profile updated successfully!</p>";
+include '../../views/templates/header.php';
+include '../../views/templates/sidebar.php';
+
+// Sample: Fetch existing doctor data for the form (replace with real data retrieval)
+$doctorName = "Dr. John Doe";
+$specialty = "Cardiology";
+$contact = "0123456789";
+
+// Handle form submission
+$updateSuccess = false;
+$errorMessage = "";
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $contactInput = trim($_POST['contact'] ?? '');
+    if (preg_match('/^\d{11}$/', $contactInput)) {
+        // Save updated contact (replace with actual DB update)
+        $contact = $contactInput;
+        $updateSuccess = true;
     } else {
-        echo "<p style='color:red;'>Please enter a valid 11-digit contact number.</p>";
+        $errorMessage = "Please enter a valid 11-digit contact number.";
     }
 }
 ?>
-<script src="../../assets/js/doctor.js"></script>
+<div class="main-content">
+  <header class="page-header">
+    <h1>Edit Profile</h1>
+  </header>
+
+  <section class="profile-card" style="max-width:600px; margin:auto;">
+    <?php if ($updateSuccess): ?>
+      <div class="message-success">Profile updated successfully!</div>
+    <?php elseif ($errorMessage): ?>
+      <div class="message-error"><?= htmlspecialchars($errorMessage) ?></div>
+    <?php endif; ?>
+
+    <form method="POST" action="edit_profile.php" novalidate>
+      <label for="name">Name:</label><br>
+      <input type="text" id="name" name="name" value="<?= htmlspecialchars($doctorName) ?>" readonly><br><br>
+
+      <label for="specialty">Specialty:</label><br>
+      <input type="text" id="specialty" name="specialty" value="<?= htmlspecialchars($specialty) ?>" readonly><br><br>
+
+      <label for="contact">Contact Info:</label><br>
+      <input type="tel" id="contact" name="contact" value="<?= htmlspecialchars($contact) ?>" placeholder="Enter 11-digit contact number" required pattern="\d{11}"><br><br>
+
+      <button type="submit" class="btn primary">Save Changes</button>
+      <button type="button" class="btn back-btn" style="margin-left: 15px;" onclick="window.location.href='dashboard.php'">Back / Discard</button>
+    </form>
+  </section>
+</div>
+<script src="../../assets/js/validation.js"></script>
 </body>
 </html>

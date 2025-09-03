@@ -22,7 +22,7 @@
         </div>
         
         <div class="header-center">
-            <h1>Dashboard</h1>
+           
         </div>
 
         <div class="header-right">

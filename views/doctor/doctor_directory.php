@@ -1,72 +1,84 @@
 <?php
-// require_once '../../controllers/loginCheck.php';
+
 if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'doctor') {
     header('Location: ../../views/login.php?error=access_denied');
     exit;
 }
+include '../../views/templates/header.php';
+include '../../views/templates/sidebar.php';
 
+// Sample data for doctor directory with image URLs - replace with real DB query
+$doctors = [
+    [
+        'name' => 'Dr. Sarah Johnson',
+        'specialty' => 'Cardiology',
+        'contact' => '0123456780',
+        'availability' => 'Mon-Fri, 9 AM - 5 PM',
+        'id' => 'D001',
+        'image' => '../../assets/img/doctor.jpg',
+    ],
+    [
+        'name' => 'Dr. Michael Brown',
+        'specialty' => 'Neurology',
+        'contact' => '0123456781',
+        'availability' => 'Tue-Thu, 10 AM - 4 PM',
+        'id' => 'D002',
+        'image' => '../../assets/img/doctor.jpg',
+    ],
+    [
+        'name' => 'Dr. Fatima Ali',
+        'specialty' => 'Pediatrics',
+        'contact' => '0123456782',
+        'availability' => 'Mon-Wed, 8 AM - 3 PM',
+        'id' => 'D003',
+        'image' => '../../assets/img/doctor.jpg',
+    ],
+];
 
-// if (!isset($_COOKIE['user_type'])) {
-//     header('location: ../login.php');
-// } elseif ($_COOKIE['user_type'] !== 'doctor') {
-//     header('location: ../login.php');
-// }
+// Filter logic
+$searchName = trim($_GET['search_name'] ?? '');
+$searchSpecialty = trim($_GET['search_specialty'] ?? '');
+
+$filteredDoctors = array_filter($doctors, function ($doc) use ($searchName, $searchSpecialty) {
+    $matchName = !$searchName || stripos($doc['name'], $searchName) !== false;
+    $matchSpecialty = !$searchSpecialty || stripos($doc['specialty'], $searchSpecialty) !== false;
+    return $matchName && $matchSpecialty;
+});
 ?>
-<!DOCTYPE html>
-<html lang="en">
+<div class="main-content">
+  <header class="page-header">
+    <h1>Doctor Directory</h1>
+  </header>
 
-<head>
-    <meta charset="UTF-8" />
-    <title>Doctor Directory</title>
-    <link rel="stylesheet" href="../../assets/css/doctor.css" />
-</head>
+  <section style="max-width: 900px; margin: 0 auto 30px;">
+    <form method="GET" action="doctor_directory.php" style="display:flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
+      <input type="text" name="search_name" placeholder="Search by name" value="<?= htmlspecialchars($searchName) ?>" style="padding:10px 14px; font-size:16px; border-radius:8px; border:1px solid #cbd5e1; width: 250px; max-width: 100%;">
+      <input type="text" name="search_specialty" placeholder="Search by specialty" value="<?= htmlspecialchars($searchSpecialty) ?>" style="padding:10px 14px; font-size:16px; border-radius:8px; border:1px solid #cbd5e1; width: 250px; max-width: 100%;">
+      <button type="submit" class="btn primary" style="padding: 12px 30px; font-size: 16px;">Search</button>
+      <a href="doctor_directory.php" class="btn back-btn" style="padding: 12px 30px; font-size: 16px; text-align:center; line-height:32px; text-decoration:none; display:inline-block;">Reset</a>
+    </form>
+  </section>
 
-<body>
-    <nav>
-        <a href="doctor_profile.php">Profile</a> |
-        <a href="edit_profile.php">Edit Profile</a> |
-        <a href="prescription.php">Prescription</a> |
-        <a href="lab_test.php">Lab Test Order</a> |
-        <a href="doctor_directory.php">Doctor Directory</a> |
-        <a href="../../controllers/logout.php" style="color:#c0392b;">Logout</a>
-    </nav>
-    <hr>
-    <section id="doctorProfiles">
-        <h1>Doctor Directory</h1>
-        <input type="text" id="doctorSearchInput" placeholder="Search by ID or Name" onkeyup="filterDoctors()" style="width:60%; padding:6px; margin-bottom:15px;" />
-        <br />
-        <label for="specialtyFilter">Filter by Specialty:</label>
-        <select id="specialtyFilter" onchange="filterDoctors()">
-            <option value="all">All</option>
-            <option value="cardiology">Cardiology</option>
-            <option value="dermatology">Dermatology</option>
-            <option value="neurology">Neurology</option>
-            <option value="pediatrics">Pediatrics</option>
-        </select>
-        <div id="doctorDirectory">
-            <ul>
-                <li data-id="D001" data-name="Dr. John Doe" data-specialty="cardiology">
-                    <strong>Dr. John Doe</strong> (Cardiology) <br>
-                    Qualifications: MD, PhD <br>
-                    Availability: Mon-Fri 9am - 3pm <br>
-                    <button class="bookBtn">Book Appointment</button>
-                </li>
-                <li data-id="D002" data-name="Dr. Jane Smith" data-specialty="dermatology">
-                    <strong>Dr. Jane Smith</strong> (Dermatology) <br>
-                    Qualifications: MD <br>
-                    Availability: Tue-Thu 10am - 4pm <br>
-                    <button class="bookBtn">Book Appointment</button>
-                </li>
-                <li data-id="D003" data-name="Dr. Robert Lee" data-specialty="neurology">
-                    <strong>Dr. Robert Lee</strong> (Neurology) <br>
-                    Qualifications: MD, Neurology Specialist <br>
-                    Availability: Wed-Fri 8am - 2pm <br>
-                    <button class="bookBtn">Book Appointment</button>
-                </li>
-            </ul>
-        </div>
-    </section>
-    <script src="../../assets/js/doctor.js"></script>
+  <section class="profile-card" style="max-width: 900px; margin: auto;">
+    <?php if (empty($filteredDoctors)): ?>
+      <p style="text-align:center; color:#888; font-style: italic;">No doctors found matching search criteria.</p>
+    <?php else: ?>
+      <ul id="doctorDirectory" style="list-style:none; padding-left:0; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center;">
+        <?php foreach ($filteredDoctors as $doc): ?>
+          <li style="background:#f9fafb; border-radius:12px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); width: 250px; padding:20px; text-align: center; display: flex; flex-direction: column; align-items: center;">
+            <img src="<?= htmlspecialchars($doc['image']) ?>" alt="<?= htmlspecialchars($doc['name']) ?> Profile" style="width:120px; height:120px; object-fit: cover; border-radius: 50%; border: 3px solid #4338ca; margin-bottom: 15px;">
+            <strong style="font-size: 18px; color: #1e293b; margin-bottom: 8px;"><?= htmlspecialchars($doc['name']) ?></strong>
+            <span><strong>Specialty:</strong> <?= htmlspecialchars($doc['specialty']) ?></span><br>
+            <span><strong>Contact:</strong> <?= htmlspecialchars($doc['contact']) ?></span><br>
+            <span><strong>Availability:</strong> <?= htmlspecialchars($doc['availability']) ?></span><br>
+            <span><strong>ID:</strong> <?= htmlspecialchars($doc['id']) ?></span><br>
+            <button class="bookBtn" style="margin-top: 12px; padding: 8px 20px; background-color: #4338ca; color: white; border: none; border-radius: 8px; cursor: pointer;" onclick="alert('Book appointment with <?= addslashes($doc['name']) ?>')">Book Appointment</button>
+          </li>
+        <?php endforeach; ?>
+      </ul>
+    <?php endif; ?>
+  </section>
+</div>
+<script src="../../assets/js/validation.js"></script>
 </body>
-
 </html>
