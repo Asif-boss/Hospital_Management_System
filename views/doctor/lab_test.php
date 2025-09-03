@@ -1,5 +1,5 @@
 <?php
-require_once '../../Controllers/loginCheck.php';
+// require_once '../../controllers/loginCheck.php';
 if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'doctor') {
     header('Location: ../../views/login.php?error=access_denied');
     exit;
@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8" />
     <title>Prescription</title>
-    <link rel="stylesheet" href="../../Assets/css/doctor.css" />
+    <link rel="stylesheet" href="../../assets/css/doctor.css" />
 </head>
 <body>
 <nav>
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <a href="prescription.php">Prescription</a> |
     <a href="lab_test.php">Lab Test Order</a> |
     <a href="doctor_directory.php">Doctor Directory</a> |
-    <a href="../../Controllers/logout.php" style="color:#c0392b;">Logout</a>
+    <a href="../../controllers/logout.php" style="color:#c0392b;">Logout</a>
 </nav>
 <hr>
 <?php
@@ -59,6 +59,6 @@ if (isset($_GET["success"])) {
     <input type="text" id="presDosage" name="presDosage" required><br /><br />
     <button type="submit">Send Prescription</button>
 </form>
-<script src="../../Assets/JS/doctor.js"></script>
+<script src="../../assets/JS/doctor.js"></script>
 </body>
 </html>
