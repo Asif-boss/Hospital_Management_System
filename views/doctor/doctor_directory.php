@@ -66,7 +66,7 @@ if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'doctor') {
             </ul>
         </div>
     </section>
-    <script src="../../assets/JS/doctor.js"></script>
+    <script src="../../assets/js/doctor.js"></script>
 </body>
 
 </html>
