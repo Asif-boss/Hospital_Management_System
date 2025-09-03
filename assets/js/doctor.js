@@ -11,23 +11,46 @@ function validatePrescription() {
 
 function validateEditProfile() {
     var contact = document.getElementById('contact').value.trim();
-    var phoneRegex = /^\d{10}$/;
+    var phoneRegex = /^\d{11}$/;
     if (!phoneRegex.test(contact)) {
-        alert("Please enter a valid 10-digit contact number.");
+        alert("Please enter a valid 11-digit contact number.");
         return false;
     }
     return true;
 }
 
 function validateLabTest() {
-    var patient = document.getElementById('labPatient').value.trim();
-    var test = document.getElementById('labType').value.trim();
-    if (patient.length < 2 || test.length < 2) {
-        alert("Patient name and Test type must be at least 2 characters.");
+    // Get the values of the form fields
+    var patient = document.getElementById('testPatient').value.trim();
+    var testName = document.getElementById('testName').value.trim();
+    var testDescription = document.getElementById('testDescription').value.trim();
+    var testDate = document.getElementById('testDate').value.trim();
+
+    // Validate the fields
+    if (patient.length < 2) {
+        alert("Patient name must be at least 2 characters.");
         return false;
     }
+
+    if (testName.length < 2) {
+        alert("Test name must be at least 2 characters.");
+        return false;
+    }
+
+    if (testDescription.length < 2) {
+        alert("Test description must be at least 2 characters.");
+        return false;
+    }
+
+    if (testDate === "") {
+        alert("Test date is required.");
+        return false;
+    }
+
+    // If all validations pass, return true
     return true;
 }
+
 
 function filterDoctors() {
     var input = document.getElementById('doctorSearchInput').value.toLowerCase();
