@@ -7,7 +7,7 @@ if (isset($_COOKIE['user_type'])) {
     } elseif ($_COOKIE['user_type'] === 'receptionist') {
         header('location: receptionist/dashboard.php');
     } elseif ($_COOKIE['user_type'] === 'doctor') {
-        header('location: doctor/doctor_directory.php');
+        header('location: doctor/doctor_profile.php');
     }
 }
 ?>
