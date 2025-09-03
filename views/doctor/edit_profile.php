@@ -28,17 +28,17 @@ if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'doctor') {
     <label>Specialty:</label><br />
     <input type="text" value="Cardiology" readonly><br /><br />
     <label>Contact Info:</label><br />
-    <input type="tel" id="contact" name="contact" value="0123456789" required pattern="[0-9]{10}" placeholder="Enter 10-digit number"><br /><br />
+    <input type="tel" id="contact" name="contact" value="0123456789" required pattern="[0-9]{11}" placeholder="Enter 11-digit number"><br /><br />
     <button type="submit">Save Changes</button>
     <button type="button" onclick="window.location.href='doctor_profile.php'">Back / Discard</button>
 </form>
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $contact = trim($_POST['contact']);
-    if (preg_match('/^\d{10}$/', $contact)) {
+    if (preg_match('/^\d{11}$/', $contact)) {
         echo "<p style='color:green;'>Profile updated successfully!</p>";
     } else {
-        echo "<p style='color:red;'>Please enter a valid 10-digit contact number.</p>";
+        echo "<p style='color:red;'>Please enter a valid 11-digit contact number.</p>";
     }
 }
 ?>
