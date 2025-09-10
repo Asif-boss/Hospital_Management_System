@@ -14,7 +14,7 @@ $doctors = [
         'contact' => '0123456780',
         'availability' => 'Mon-Fri, 9 AM - 5 PM',
         'id' => 'D001',
-        'image' => '../../Assets/img/doctor.jpg',
+        'image' => '../../assets/img/doctor.jpg',
     ],
     [
         'name' => 'Dr. Michael Brown',
@@ -22,7 +22,7 @@ $doctors = [
         'contact' => '0123456781',
         'availability' => 'Tue-Thu, 10 AM - 4 PM',
         'id' => 'D002',
-        'image' => '../../Assets/img/doctor.jpg',
+        'image' => '../../assets/img/doctor.jpg',
     ],
     [
         'name' => 'Dr. Fatima Ali',
