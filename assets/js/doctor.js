@@ -20,13 +20,13 @@ function validateEditProfile() {
 }
 
 function validateLabTest() {
-    // Get the values of the form fields
+
     var patient = document.getElementById('testPatient').value.trim();
     var testName = document.getElementById('testName').value.trim();
     var testDescription = document.getElementById('testDescription').value.trim();
     var testDate = document.getElementById('testDate').value.trim();
 
-    // Validate the fields
+
     if (patient.length < 2) {
         alert("Patient name must be at least 2 characters.");
         return false;
@@ -47,7 +47,7 @@ function validateLabTest() {
         return false;
     }
 
-    // If all validations pass, return true
+    
     return true;
 }
 

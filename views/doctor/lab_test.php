@@ -7,21 +7,18 @@ if (!isset($_COOKIE['user_type']) || $_COOKIE['user_type'] !== 'doctor') {
 include '../../views/templates/header.php';
 include '../../views/templates/sidebar.php';
 
-// Handle form submission
 $successMessage = "";
 $errorMessage = "";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $patientName = trim($_POST['patient_name'] ?? '');
+    $patient = trim($_POST['patient_name'] ?? '');
     $testName = trim($_POST['test_name'] ?? '');
     $testDescription = trim($_POST['test_description'] ?? '');
     $testDate = trim($_POST['test_date'] ?? '');
-
-    if ($patientName && $testName && $testDate) {
-        // Save lab test order to DB here
-        $successMessage = "Lab test order submitted successfully!";
+    if (strlen($patient) < 2 || strlen($testName) < 2 || strlen($testDescription) < 2 || $testDate == "") {
+        $errorMessage = "All fields must be filled correctly.";
     } else {
-        $errorMessage = "Please fill in required fields (Patient Name, Test Name, Test Date).";
+        $successMessage = "Lab test order submitted successfully!";
     }
 }
 ?>
@@ -29,32 +26,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <header class="page-header">
     <h1>Lab Test Order</h1>
   </header>
-
   <section class="profile-card" style="max-width:600px; margin:auto;">
     <?php if ($successMessage): ?>
       <div class="message-success"><?= htmlspecialchars($successMessage) ?></div>
     <?php elseif ($errorMessage): ?>
       <div class="message-error"><?= htmlspecialchars($errorMessage) ?></div>
     <?php endif; ?>
-
-    <form method="POST" action="lab_test.php" novalidate>
-      <label for="patient_name">Patient Name:</label>
-      <input type="text" id="patient_name" name="patient_name" placeholder="Enter patient name" required>
-
-      <label for="test_name">Test Name:</label>
-      <input type="text" id="test_name" name="test_name" placeholder="Enter test name" required>
-
-      <label for="test_description">Test Description:</label>
-      <textarea id="test_description" name="test_description" placeholder="Enter test description (optional)" rows="3"></textarea>
-
-      <label for="test_date">Test Date:</label>
-      <input type="date" id="test_date" name="test_date" required>
-
+    <form method="POST" action="lab_test.php" onsubmit="return validateLabTest();" novalidate>
+      <label for="testPatient">Patient Name:</label>
+      <input type="text" id="testPatient" name="patient_name" required>
+      <label for="testName">Test Name:</label>
+      <input type="text" id="testName" name="test_name" required>
+      <label for="testDescription">Test Description:</label>
+      <textarea id="testDescription" name="test_description" rows="3"></textarea>
+      <label for="testDate">Test Date:</label>
+      <input type="date" id="testDate" name="test_date" required>
       <button type="submit" class="btn primary">Order Lab Test</button>
       <button type="button" class="btn back-btn" onclick="window.location.href='dashboard.php'">Back / Discard</button>
     </form>
   </section>
 </div>
 <script src="../../assets/js/validation.js"></script>
+<script src="../../assets/js/doctor.js"></script>
 </body>
 </html>
