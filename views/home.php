@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BD Hospital - Healthcare Excellence</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/home.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body>
@@ -35,7 +35,7 @@
             <p>Your Health, Our Priority - Delivering Excellence in Healthcare</p>
             <div class="hero-buttons">
                 <button class="btn-primary">Book Appointment</button>
-                <button class="btn-secondary">New Patient</button>
+                <a href="register.php"><button class="btn-secondary">New Patient</button></a>
             </div>
         </div>
         <div class="hero-stats">
@@ -103,11 +103,13 @@
                     <h3>Book Appointment</h3>
                     <p>Schedule your visit with our specialists</p>
                 </button>
-                <button class="action-card">
-                    <i class="fas fa-user-plus"></i>
-                    <h3>New Patient Registration</h3>
-                    <p>Register as a new patient</p>
-                </button>
+                <a href="register.php">
+                    <button class="action-card">
+                        <i class="fas fa-user-plus"></i>
+                        <h3>New Patient Registration</h3>
+                        <p>Register as a new patient</p>
+                    </button>
+                </a>
                 <button class="action-card">
                     <i class="fas fa-history"></i>
                     <h3>Patient History</h3>

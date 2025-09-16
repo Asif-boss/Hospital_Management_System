@@ -1,20 +1,46 @@
-<?php
-    $username = trim($_REQUEST['username']);
-    $password = trim($_REQUEST['password']);
 
-    if ($username == 'patient' || $password == 'patient') {
-        setcookie('user_type', 'patient', time() + (86400 * 30), "/");
-        header('location: ../views/patient/dashboard.php');
-    } elseif ($username == 'admin' || $password == 'admin') {
-        setcookie('user_type', 'admin', time() + (86400 * 30), "/");
-        header('location: ../views/admin/dashboard.php');
-    } elseif ($username == 'receptionist' || $password == 'receptionist') {
-        setcookie('user_type', 'receptionist', time() + (86400 * 30), "/");
-        header('location: ../views/receptionist/dashboard.php');
-    } elseif ($username == 'doctor' || $password == 'doctor') {
-        setcookie('user_type', 'doctor', time() + (86400 * 30), "/");
-        header('location: ../views/doctor/doctor_directory.php');
+<?php
+session_start();
+
+require_once('../models/userModel.php');
+
+$email = trim($_REQUEST['email']);
+$password = trim($_REQUEST['password']);
+$remember = isset($_POST['remember']);
+
+$user = ['email' => $email, 'password' => $password];
+$status = loginUser($user);
+
+if ($status) {
+    $user = getUserByEmail($email);
+    $user_type = $user['user_type'];
+
+    if ($remember) {
+        setcookie('user_type', $user_type, time() + (30 * 24 * 60 * 60), '/');
+        setcookie('email', $email, time() + (30 * 24 * 60 * 60), '/');
     } else {
-        header('location: ../views/login.php?error=invalid_log');
+        $_SESSION['user_type'] = $user_type;
+        $_SESSION['email'] = $email;
     }
+
+    switch ($user_type) {
+        case 'patient':
+            header('Location: ../views/dashboard.php');
+            exit;
+        case 'admin':
+            header('Location: ../views/dashboard.php');
+            exit;
+        case 'super_admin':
+            header('Location: ../views/dashboard.php');
+            exit;
+        case 'receptionist':
+            header('Location: ../views/dashboard.php');
+            exit;
+        case 'doctor':
+            header('Location: ../views/dashboard.php');
+            exit;
+    }
+} else {
+    header('location: ../views/login.php?error=invalid_log');
+}
 ?>

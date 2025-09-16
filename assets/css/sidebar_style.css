@@ -1,0 +1,246 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #f0f2f5;
+    display: flex;
+    min-height: 100vh;
+}
+
+.main-header {
+    background: #6e8efb;
+    color: white;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+}
+
+.hospital-logo span {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header-center h1 {
+    font-size: 20px;
+}
+
+.notifications {
+    position: relative;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.notification-icon {
+    font-size: 20px;
+}
+
+.notification-badge {
+    background: red;
+    color: white;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    right: -10px;
+}
+
+.notifications-dropdown {
+    display: none;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: white;
+    border-radius: 5px;
+    width: 250px;
+    z-index: 1001;
+}
+
+.notifications:hover .notifications-dropdown {
+    display: block;
+}
+
+.notification-header {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-header h4 {
+    margin: 0;
+    font-size: 16px;
+}
+
+.mark-all-read {
+    font-size: 12px;
+    color: #6e8efb;
+    cursor: pointer;
+}
+
+.notification-list {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.notification-item {
+    display: flex;
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.notification-item.unread {
+    background: #f8f9fa;
+}
+
+.notification-item .icon {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.notification-item .icon.success {
+    color: green;
+}
+
+.notification-item .icon.warning {
+    color: orange;
+}
+
+.notification-item .icon.info {
+    color: blue;
+}
+
+.notification-item p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.notification-item .time {
+    font-size: 12px;
+    color: #666;
+}
+
+.notification-footer {
+    padding: 10px;
+    text-align: center;
+}
+
+.notification-footer a {
+    color: #6e8efb;
+    text-decoration: none;
+}
+
+.user-profile {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.user-dropdown {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 20px;
+    background: white;
+    border-radius: 5px;
+    width: 150px;
+}
+
+.user-profile:hover .user-dropdown {
+    display: block;
+}
+
+.user-dropdown a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.user-dropdown a:hover {
+    background: #f0f2f5;
+}
+
+.sidebar {
+    margin: 10px;
+    background: #fff;
+    width: 250px;
+    position: fixed;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    border-radius: 10px;;
+}
+
+.sidebar-nav {
+    padding: 10px;
+}
+
+.nav-link {
+    display: block;
+    padding: 15px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 8px;
+    margin: 5px 5px;
+}
+
+.nav-link:hover {
+    background: #a7bafa;
+    color: white;
+}
+
+.nav-link.active{
+    background: #6e8efb;
+    color: white;
+    font-weight: bold;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 20px;
+    padding: 20px;
+}
+
+.hospital-contact h4 {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.hospital-contact p {
+    font-size: 14px;
+    color: #666;
+    margin: 5px 0;
+}
+
+.main-content {
+    margin-left: 260px;
+    margin-top: 80px;
+    padding: 10px;
+    flex-grow: 1;
+}
