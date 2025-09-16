@@ -1,0 +1,6 @@
+body{font-family:Arial,sans-serif;background:#f6f7fb;margin:0}
+.site-header{background:#0b5ed7;color:#fff;padding:10px}
+.container{padding:20px;background:#fff;margin:20px auto;max-width:800px;border-radius:5px}
+.simple-table{width:100%;border-collapse:collapse}
+.simple-table th,.simple-table td{border:1px solid #ddd;padding:8px}
+button{background:#0b5ed7;color:#fff;border:none;padding:6px 10px;cursor:pointer}
